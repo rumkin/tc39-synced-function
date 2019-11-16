@@ -79,6 +79,24 @@ synced function requestJson(url) {
 }
 ```
 
+### Nowait and promises
+
+Regular async function:
+```js
+async function requestJson(url) {
+  const promise = fetch(url).then((res) => res.json())
+  const json = await promise
+}
+```
+
+Synchronized function:
+```js
+synced function requestJson(url) {
+  const promise = nowait fetch(url)
+  const json = promise.then().json()
+}
+```
+
 ### Parallel call
 
 Regular async function:
@@ -102,23 +120,5 @@ synced function requestJson(urls) {
   ])
   
   return responses
-}
-```
-
-### Nowait usage
-
-Regular async function:
-```js
-async function requestJson(url) {
-  const promise = fetch(url).then((res) => res.json())
-  const json = await promise
-}
-```
-
-Synchronized function:
-```js
-synced function requestJson(url) {
-  const promise = nowait fetch(url)
-  const json = promise.then().json()
 }
 ```
