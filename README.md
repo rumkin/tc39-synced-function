@@ -120,7 +120,7 @@ async function requestJson(url) {
 }
 ```
 
-Regular async function:
+Synchronized function:
 ```js
 synced function requestJson(url) {
   const promise = nowait fetch(url)
