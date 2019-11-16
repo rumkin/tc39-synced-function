@@ -1,6 +1,6 @@
 # Synchronized function syntax
 
-This proposal suggest to create a new kind of syntax and semantic of asynchronous functions, socalled synchronized function. It's syntax is opposite to async functions, it awaits promises automatically without using `await` keyword.
+This proposal suggest to create a new kind of syntax and semantic of asynchronous functions, socalled synchronized function. It's syntax is opposite to async functions, it awaits promises automatically without using `await` keyword and use `nowait` to prevent call from resolution.
 
 ## Rationale
 
@@ -9,10 +9,10 @@ Async functions were created to reduce nesting and simplify code. Currently asyn
 Current async/await syntax has bunch of issues:
 
 1. It couldn't solve chained promises and lead to weird expressions like this `await (await fetch(url)).json()`.
-2. It makes harder to implement other language features like piped calls with things like this `x |> await fetch().then((res) => res.json())`.
+2. It makes harder to implement other language features like pipeline operator which couldn't use asyncronous code `x |> async (url) => fetch(url).then((res) => res.json()) |> await`.
 3. It requires custom solutions for other language feauters like async for-loop.
 
-Synchronized function solves this issues and reduces syntax complexity. It resolves all promises returend by function call, even from chained calls. It's still asynchronous under the hood and returns a promise like regular async function do, so it isn't a blocking too. In the case when developers still need to move a call to another event-frame, they can use `setImmediate/setTimeout` or `nowait` keyword.
+Synchronized function solves this issues and reduces syntax complexity. It resolves all promises returend by function call, even from chained calls. It's still asynchronous under the hood and returns a promise like regular async function do, so it isn't blocking too. In the case when developers still need to move a call to another event-frame, they can use `setImmediate/setTimeout` or `nowait` keyword.
 
 ## Syntax
 
