@@ -39,7 +39,7 @@ const get = (url) ~> fetch(url).json()
 
 ## Resolution
 
-Synced function resolves each function call or constructor caall result. It doesn't resolve object properties.
+Synced function resolves each function call or constructor call result. It doesn't resolve object properties.
 
 Constructor resolution:
 ```
