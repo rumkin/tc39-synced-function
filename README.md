@@ -4,7 +4,7 @@ This proposal suggest to create a new kind of syntax and semantic of asynchronou
 
 ## Rationale
 
-Async functions were created to reduce nesting and simplify code. Currently async functions are using to make call behav like a synchronous function and it's a very rare case when developers need to make async function not to wait a promise resolution received in some. Thus async functions are flooded by `await` usage.
+Async functions were created to reduce nesting and simplify code. Currently async functions are using to make call behav like a synchronous function and it's a very rare/specific case when developers need to make async function not to wait a promise resolution in current call. Thus async functions are flooded by `await` statements.
 
 Current async/await syntax has bunch of issues:
 
@@ -12,13 +12,13 @@ Current async/await syntax has bunch of issues:
 2. It makes harder to implement other language features like piped calls with things like this `x |> await fetch().then((res) => res.json())`.
 3. It requires custom solutions for other language feauters like async for-loop.
 
-Synchronized function solves this issues and reduces syntax complexity. It resolves all promises, even intermediate promises from chained calls. It's still asynchronous under the hood and return a promise like regular async function do, so it isn't a blocking too. In the case when developers still need to move a call to another event-frame, they can use `setImmediate/setTimeout`.
+Synchronized function solves this issues and reduces syntax complexity. It resolves all promises returend by function call, even from chained calls. It's still asynchronous under the hood and returns a promise like regular async function do, so it isn't a blocking too. In the case when developers still need to move a call to another event-frame, they can use `setImmediate/setTimeout` or `nowait` keyword.
 
 ## Syntax
 
 ### Regular function
 
-Synchromized functions requires `synced` keyword placed before the function.
+Synchromized functions requires `synced` keyword placed before the function. Also it uses `nowait` keyword to prevent a promise resolution.
 
 Example:
 
@@ -37,9 +37,31 @@ Example:
 const get = (url) ~> fetch(url).json()
 ```
 
+## Resolution
+
+Synced function resolves each function call or constructor caall result. It doesn't resolve object properties.
+
+Constructor resolution:
+```
+synced function example() {
+  const result = new Promise((resolve) => setImmediate(resolve, true)) // would be resolved
+  result // -> true
+}
+```
+
+External promise resolution:
+```
+const promise = new Promise((resolve) => setImmediate(resolve, 1))
+
+synced function example() {
+  const result = promise.then() // would be resolved
+  result // -> true
+}
+```
+
 ## Examples
 
-## Chained call
+### Chained call
 
 Regular async function:
 ```js
@@ -57,7 +79,7 @@ synced function requestJson(url) {
 }
 ```
 
-## Parallel call
+### Parallel call
 
 Regular async function:
 ```js
@@ -86,4 +108,21 @@ synced function requestJson(urls) {
 Promise.parallel implementation:
 ```js
 Promise.parallel = (...fs) => Promise.all(fs.map(f => f()))
+```
+
+### Nowait usage
+
+Regular async function:
+```js
+async function requestJson(url) {
+  const promise = fetch(url).then((res) => res.json())
+  const json = await promise
+}
+```
+
+Regular async function:
+```js
+async function requestJson(url) {
+  const json = (nowait fetch(url)).then().json()
+}
 ```
