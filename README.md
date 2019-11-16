@@ -20,6 +20,14 @@ Synchronized function solves this issues and reduces syntax complexity. It resol
 
 Synchromized functions requires `synced` keyword placed before the function.
 
+Example:
+
+```
+synced function get(url) {
+  return fetch(url).json()
+}
+```
+
 ### Arrow function
 
 It seems logical to make this behavior the default due to its simplicity and to use `~>` construction for synced function definition of arrow function (instead of a keyword).
