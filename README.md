@@ -51,7 +51,7 @@ synced function example() {
 
 External promise resolution:
 ```
-const promise = new Promise((resolve) => setImmediate(resolve, 1))
+const promise = new Promise((resolve) => setImmediate(resolve, true))
 
 synced function example() {
   const result = promise.then() // would be resolved
