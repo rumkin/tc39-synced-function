@@ -123,6 +123,7 @@ async function requestJson(url) {
 Regular async function:
 ```js
 synced function requestJson(url) {
-  const json = (nowait fetch(url)).then().json()
+  const promise = nowait fetch(url)
+  const json = promise.then().json()
 }
 ```
