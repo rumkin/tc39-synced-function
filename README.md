@@ -97,7 +97,7 @@ synced function requestJson(url) {
 }
 ```
 
-### Parallel call
+### Parallel resolution
 
 Regular async function:
 ```js
