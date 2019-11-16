@@ -96,18 +96,13 @@ async function requestJson(urls) {
 Synchronized function:
 ```js
 synced function requestJson(urls) {
-  const responses = Promise.parallel(
-    () => fetch(urls[0]),
-    () => fetch(urls[1]),
-  )
+  const responses = Promise.all([
+    nowait fetch(urls[0]),
+    nowait fetch(urls[1]),
+  ])
   
   return responses
 }
-```
-
-Promise.parallel implementation:
-```js
-Promise.parallel = (...fs) => Promise.all(fs.map(f => f()))
 ```
 
 ### Nowait usage
