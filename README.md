@@ -122,7 +122,7 @@ async function requestJson(url) {
 
 Regular async function:
 ```js
-async function requestJson(url) {
+synced function requestJson(url) {
   const json = (nowait fetch(url)).then().json()
 }
 ```
