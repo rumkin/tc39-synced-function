@@ -1,6 +1,6 @@
 # Synchronized function syntax
 
-This proposal suggest to create a new kind of syntax and semantic of asynchronous functions, socalled synchronized function. It's syntax is opposite to async functions, it awaits promises automatically without using `await` keyword and use `nowait` to prevent call from resolution.
+This proposal suggests creation of a new kind of syntax and semantic for asynchronous functions, socalled synchronized function. It's logic is opposite to async functions, it awaits promises automatically without using `await` keyword and use `nowait` to prevent call from resolution.
 
 ## Rationale
 
