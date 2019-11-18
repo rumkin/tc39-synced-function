@@ -122,3 +122,19 @@ synced function requestJson(urls) {
   return responses
 }
 ```
+
+Synchronized function (without `nowait`):
+```js
+function parallel(fs) {
+  return Promise.all(fs.map(f => f()))
+}
+
+synced function requestJson(urls) {
+  const responses = parallel([
+    () => fetch(urls[0]),
+    () => fetch(urls[1]),
+  ])
+  
+  return responses
+}
+```
