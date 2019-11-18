@@ -23,7 +23,7 @@ Synchromized functions requires `synced` keyword placed before the function. Als
 Example:
 
 ```
-synced function get(url) {
+synced function request(url) {
   return fetch(url).json()
 }
 ```
@@ -65,7 +65,7 @@ synced function example() {
 
 Regular async function:
 ```js
-async function requestJson(url) {
+async function request(url) {
   const res = await fetch(url)
   const json = await res.json()
   return json
@@ -74,7 +74,7 @@ async function requestJson(url) {
 
 Synchronized function:
 ```js
-synced function requestJson(url) {
+synced function request(url) {
   return fetch(url).json()
 }
 ```
@@ -83,7 +83,7 @@ synced function requestJson(url) {
 
 Regular async function:
 ```js
-async function requestJson(url) {
+async function request(url) {
   const promise = fetch(url).then((res) => res.json())
   const json = await promise
 }
@@ -91,7 +91,7 @@ async function requestJson(url) {
 
 Synchronized function:
 ```js
-synced function requestJson(url) {
+synced function request(url) {
   const promise = nowait fetch(url)
   const json = promise.then().json()
 }
@@ -101,7 +101,7 @@ synced function requestJson(url) {
 
 Regular async function:
 ```js
-async function requestJson(urls) {
+async function request(urls) {
   const responses = await Promise.all([
     fetch(urls[0]),
     fetch(urls[1]),
@@ -113,7 +113,7 @@ async function requestJson(urls) {
 
 Synchronized function:
 ```js
-synced function requestJson(urls) {
+synced function request(urls) {
   const responses = Promise.all([
     nowait fetch(urls[0]),
     nowait fetch(urls[1]),
@@ -129,7 +129,7 @@ function parallel(fs) {
   return Promise.all(fs.map(f => f()))
 }
 
-synced function requestJson(urls) {
+synced function request(urls) {
   const responses = parallel([
     () => fetch(urls[0]),
     () => fetch(urls[1]),
